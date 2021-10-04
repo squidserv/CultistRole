@@ -25,7 +25,6 @@ ROLE.isactive = nil
 ROLE.selectionpredicate = nil
 
 if SERVER then
-    print("Loading convars")
     CreateConVar("ttt_cultist_pledge_time", 3, FCVAR_NONE, "How long it takes for someone to join the cult", 0, 120)
     CreateConVar("ttt_cultist_shrine_ammo", 3, FCVAR_NONE, "How many people each shrine can convert", 0, 15)
     CreateConVar("ttt_cultist_pledge_health", 105, FCVAR_NONE, "The health of cult pledges", 0, 200)
@@ -101,7 +100,6 @@ if SERVER then
 
     -- Print a message to tell the T's that there is a cultist
     hook.Add("TTTBeginRound", "CultistAlertMessage", function()
-        print("round begin")
         local isCultist
         for i, ply in ipairs(player.GetAll()) do
             if ply:IsCultist() then
