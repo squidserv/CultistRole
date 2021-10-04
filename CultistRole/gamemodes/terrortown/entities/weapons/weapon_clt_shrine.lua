@@ -95,12 +95,10 @@ function SWEP:ShrineDrop()
 
             -- Set shrine properties
             if ConVarExists("ttt_cultist_pledge_time") then
-                print("pledgeTime")
                 shrine:SetTimeToPledge(GetConVar("ttt_cultist_pledge_time"):GetInt())
             end
 
             if ConVarExists("ttt_cultist_pledge_health") then
-                print("pledgeHealth")
                 shrine:SetPledgeHealth(GetConVar("ttt_cultist_pledge_health"):GetInt())
             end
 
