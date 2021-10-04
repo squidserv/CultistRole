@@ -2,20 +2,16 @@
 
 AddCSLuaFile()
 
-local sName = "Shrine_Name"
-if ConVarExists("ttt_cultist_shrine_name") then
-    sName = GetConVar("ttt_cultist_shrine_name"):GetString()
-end
-
 if CLIENT then
+
     -- this entity can be DNA-sampled so we need some display info
     ENT.Icon = "vgui/ttt/icon_health"
-    ENT.PrintName = sName
+    ENT.PrintName = "shrine_name"
 
     local GetPTranslation = LANG.GetParamTranslation
 
     ENT.TargetIDHint = {
-        name = sName,
+        name = "shrine_name",
         hint = "shrine_hint",
         fmt  = function(ent, txt)
             return GetPTranslation(txt,
@@ -101,7 +97,7 @@ function ENT:Initialize()
         local GetPTranslation = LANG.GetParamTranslation
         if LocalPlayer():IsDetectiveTeam() then
             self.TargetIDHint = {
-                name = sName,
+                name = "shrine_name",
                 hint = "shrine_hint_det",
                 fmt  = function(ent, txt)
                     return GetPTranslation(txt,
@@ -111,7 +107,7 @@ function ENT:Initialize()
             };
         else
             self.TargetIDHint = {
-                name = sName,
+                name = "shrine_name",
                 hint = "shrine_hint",
                 fmt  = function(ent, txt)
                     return GetPTranslation(txt,
@@ -166,6 +162,10 @@ function ENT:Pledge(ply)
 
 
     if not ply:IsDetectiveTeam() then
+        local sName = "The Almighty One"
+        if CRVersion("1.2.7") then
+            sName = GetGlobalString("ttt_cultist_shrine_name")
+        end
         ply:ChatPrint("You have pledged your life to " .. sName .. ". Your soul has been reborn!")
 
         for k, v in pairs(player.GetAll()) do

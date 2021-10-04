@@ -34,7 +34,6 @@ if SERVER then
     CreateConVar("ttt_cultist_shrine_name", "The Almighty One", FCVAR_REPLICATED, "The name of the shrines")
 
     hook.Add("TTTSyncGlobals", "CultistGlobals", function()
-        print("syncing globals")
         SetGlobalString("ttt_cultist_shrine_name", GetConVar("ttt_cultist_shrine_name"):GetString())
     end)
 end

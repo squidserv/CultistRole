@@ -2,13 +2,8 @@ AddCSLuaFile()
 
 SWEP.HoldType = "normal"
 
-local sName = "Shrine_Name"
-if ConVarExists("ttt_cultist_shrine_name") then
-    sName = GetConVar("ttt_cultist_shrine_name"):GetString()
-end
-
 if CLIENT then
-    SWEP.PrintName = sName
+    SWEP.PrintName = "shrine_name"
     SWEP.Slot = 6
 
     SWEP.ViewModelFOV = 10
@@ -116,6 +111,10 @@ function SWEP:ShrineDrop()
                 self:Remove()
             end
 
+            local sName = "The Almighty One"
+            if CRVersion("1.2.7") then
+                sName = GetGlobalString("ttt_cultist_shrine_name")
+            end
             for k, v in pairs(player.GetAll()) do
                 if not v:IsTraitorTeam() and not v:IsDetectiveTeam() and not v:IsCultist() then
                     v:PrintMessage(HUD_PRINTCENTER, sName .. " calls to you...")
