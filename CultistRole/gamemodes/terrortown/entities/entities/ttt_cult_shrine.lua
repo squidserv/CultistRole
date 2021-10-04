@@ -35,13 +35,11 @@ ENT.CanHavePrints = true
 --Number of seconds before the user converts to the cult
 local timeToPledge = 3
 if ConVarExists("ttt_cultist_pledge_time") then
-    print("timeToPledge")
     timeToPledge = GetConVar("ttt_cultist_pledge_time"):GetInt()
 end
 
 local pledgeHealth = 105
 if ConVarExists("ttt_cultist_pledge_health") then
-    print("pledgeHealth")
     pledgeHealth = GetConVar("ttt_cultist_pledge_health"):GetInt()
 end
 

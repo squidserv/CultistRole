@@ -30,7 +30,6 @@ SWEP.WorldModel = "models/props_c17/oildrum001_explosive.mdl"
 
 local clipSize = 3
 if ConVarExists("ttt_cultist_shrine_ammo") then
-    print("clipsize")
     clipSize = GetConVar("ttt_cultist_shrine_ammo"):GetInt()
 end
 

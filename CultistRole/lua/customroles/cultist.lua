@@ -76,7 +76,6 @@ table.insert(ROLE.convars, {
     type = ROLE_CONVAR_TYPE_TEXT
 })
 
-print("Registered role")
 RegisterRole(ROLE)
 
 hook.Add("Initialize", "CultistInitialize", function()
