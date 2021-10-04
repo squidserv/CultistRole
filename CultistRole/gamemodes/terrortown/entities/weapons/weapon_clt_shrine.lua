@@ -2,7 +2,10 @@ AddCSLuaFile()
 
 SWEP.HoldType = "normal"
 
-local sName = GetGlobalString("ttt_cultist_shrine_name")
+local sName = "Shrine_Name"
+if ConVarExists("ttt_cultist_shrine_name") then
+    sName = GetConVar("ttt_cultist_shrine_name"):GetBool()
+end
 
 if CLIENT then
     SWEP.PrintName = sName

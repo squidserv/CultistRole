@@ -2,7 +2,10 @@
 
 AddCSLuaFile()
 
-local sName = GetGlobalString("ttt_cultist_shrine_name")
+local sName = "Shrine_Name"
+if ConVarExists("ttt_cultist_shrine_name") then
+    sName = GetConVar("ttt_cultist_shrine_name"):GetBool()
+end
 
 if CLIENT then
     -- this entity can be DNA-sampled so we need some display info
@@ -183,7 +186,6 @@ end
 hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
     local convertT = true
     if ConVarExists("ttt_cultist_convert_traitor") then
-        print("convert T")
         convertT = GetConVar("ttt_cultist_convert_traitor"):GetBool()
     end
     if IsValid(ent) and not ent:IsPlayer() and ent.TimeToPledge ~= nil

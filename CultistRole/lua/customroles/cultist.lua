@@ -120,7 +120,9 @@ if SERVER then
             if v:Alive() and v:IsTerror() then
                 if v:IsCultist() then
                     cultistAlive = true
-                elseif not v:ShouldActLikeJester() then
+                elseif CRVersion("1.2.5") and v:ShouldActLikeJester() then
+                    otherAlive = true
+                elseif not v:IsJesterTeam() or (v:IsClown() and v:IsRoleActive()) then
                     otherAlive = true
                 end
             end
