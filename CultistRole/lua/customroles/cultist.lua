@@ -50,7 +50,8 @@ ROLE.translations = {
         ["shrine_hint"] = "Hold {usekey} to pledge yourself to the cult",
         ["shrine_hint_det"] = "This shrine has converted: {num} Innocents. Hold {usekey} to investigate",
         ["shrine_broken"] = "One of your shrines has been destroyed!",
-        ["shrine_help"] = "{primaryfire} places the Shrine"
+        ["shrine_help"] = "{primaryfire} places the Shrine",
+        ["shrine_desc"] = "Places a shrine that can be used to convert people to your cause"
     }
 }
 
