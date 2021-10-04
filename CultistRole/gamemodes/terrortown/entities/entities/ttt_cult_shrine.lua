@@ -147,10 +147,9 @@ function ENT:Pledge(ply)
             ply:SetMaxHealth(self.PledgeHealth)
         end
 
-        print("---Num of converts: " .. self:GetNumOfConverts() .. " " .. self:GetConvertedNicks())
         self:SetNumOfConverts(self:GetNumOfConverts() + 1)
         self:SetConvertedNicks(self:GetConvertedNicks() .. " " .. ply:Nick())
-        print("---New Num of converts: " .. self:GetNumOfConverts() .. " " .. self:GetConvertedNicks())
+
     else
         self:SetDesecrated(true)
         ply:PrintMessage(HUD_PRINTCENTER, "These terrorists have betrayed you: " .. self:GetConvertedNicks())

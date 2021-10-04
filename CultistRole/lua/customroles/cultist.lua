@@ -29,7 +29,7 @@ if SERVER then
     CreateConVar("ttt_cultist_pledge_time", 3, FCVAR_NONE, "How long it takes for someone to join the cult", 0, 120)
     CreateConVar("ttt_cultist_shrine_ammo", 3, FCVAR_NONE, "How many people each shrine can convert", 0, 15)
     CreateConVar("ttt_cultist_pledge_health", 105, FCVAR_NONE, "The health of cult pledges", 0, 200)
-    CreateConVar("ttt_cultist_jester_like", 0, FCVAR_NONE, "Can they do damage?")
+    -- TODO CreateConVar("ttt_cultist_jester_like", 0, FCVAR_NONE, "Can they do damage?")
     CreateConVar("ttt_cultist_shrine_name", "The Almighty One", FCVAR_REPLICATED, "The name of the shrines")
 
     hook.Add("TTTSyncGlobals", "CultistGlobals", function()
@@ -38,10 +38,12 @@ if SERVER then
     end)
 end
 
-ROLE.shouldactlikejester = function()
+ROLE.shouldactlikejester = nil
+--[[function()
     print("Is jester like function ".. GetConVar("ttt_cultist_jester_like"):GetBool())
     return GetConVar("ttt_cultist_jester_like"):GetBool()
 end
+--]]
 
 ROLE.translations = {}
 
