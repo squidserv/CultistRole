@@ -4,7 +4,7 @@ AddCSLuaFile()
 
 local sName = "Shrine_Name"
 if ConVarExists("ttt_cultist_shrine_name") then
-    sName = GetConVar("ttt_cultist_shrine_name"):GetBool()
+    sName = GetConVar("ttt_cultist_shrine_name"):GetString()
 end
 
 if CLIENT then
