@@ -2,8 +2,10 @@ AddCSLuaFile()
 
 SWEP.HoldType = "normal"
 
+local sName = GetGlobalString("ttt_cultist_shrine_name")
+
 if CLIENT then
-    SWEP.PrintName = "shrine_name"
+    SWEP.PrintName = sName
     SWEP.Slot = 6
 
     SWEP.ViewModelFOV = 10
@@ -25,14 +27,13 @@ SWEP.WorldModel = "models/props_c17/oildrum001_explosive.mdl"
 
 local clipSize = 3
 if ConVarExists("ttt_cultist_shrine_ammo") then
+    print("clipsize")
     clipSize = GetConVar("ttt_cultist_shrine_ammo"):GetInt()
 end
 
 SWEP.Primary.ClipSize = clipSize
 SWEP.Primary.DefaultClip = clipSize
 
---SWEP.Primary.ClipSize = clipSize
---SWEP.Primary.DefaultClip = clipSize
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1.0
@@ -92,10 +93,12 @@ function SWEP:ShrineDrop()
 
             -- Set shrine properties
             if ConVarExists("ttt_cultist_pledge_time") then
+                print("pledgeTime")
                 shrine:SetTimeToPledge(GetConVar("ttt_cultist_pledge_time"):GetInt())
             end
 
             if ConVarExists("ttt_cultist_pledge_health") then
+                print("pledgeHealth")
                 shrine:SetPledgeHealth(GetConVar("ttt_cultist_pledge_health"):GetInt())
             end
 
@@ -113,7 +116,6 @@ function SWEP:ShrineDrop()
                 self:Remove()
             end
 
-            local sName = GetGlobalString("ttt_cultist_shrine_name")
             for k, v in pairs(player.GetAll()) do
                 if not v:IsTraitorTeam() and not v:IsDetectiveTeam() and not v:IsCultist() then
                     v:PrintMessage(HUD_PRINTCENTER, sName .. " calls to you...")

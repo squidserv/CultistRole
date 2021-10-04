@@ -2,15 +2,17 @@
 
 AddCSLuaFile()
 
+local sName = GetGlobalString("ttt_cultist_shrine_name")
+
 if CLIENT then
     -- this entity can be DNA-sampled so we need some display info
     ENT.Icon = "vgui/ttt/icon_health"
-    ENT.PrintName = "shrine_name"
+    ENT.PrintName = sName
 
     local GetPTranslation = LANG.GetParamTranslation
 
     ENT.TargetIDHint = {
-        name = "shrine_name",
+        name = sName,
         hint = "shrine_hint",
         fmt  = function(ent, txt)
             return GetPTranslation(txt,
@@ -30,11 +32,13 @@ ENT.CanHavePrints = true
 --Number of seconds before the user converts to the cult
 local timeToPledge = 3
 if ConVarExists("ttt_cultist_pledge_time") then
+    print("timeToPledge")
     timeToPledge = GetConVar("ttt_cultist_pledge_time"):GetInt()
 end
 
 local pledgeHealth = 105
 if ConVarExists("ttt_cultist_pledge_health") then
+    print("pledgeHealth")
     pledgeHealth = GetConVar("ttt_cultist_pledge_health"):GetInt()
 end
 
@@ -96,7 +100,7 @@ function ENT:Initialize()
         local GetPTranslation = LANG.GetParamTranslation
         if LocalPlayer():IsDetectiveTeam() then
             self.TargetIDHint = {
-                name = "shrine_name",
+                name = sName,
                 hint = "shrine_hint_det",
                 fmt  = function(ent, txt)
                     return GetPTranslation(txt,
@@ -106,7 +110,7 @@ function ENT:Initialize()
             };
         else
             self.TargetIDHint = {
-                name = "shrine_name",
+                name = sName,
                 hint = "shrine_hint",
                 fmt  = function(ent, txt)
                     return GetPTranslation(txt,
@@ -161,7 +165,6 @@ function ENT:Pledge(ply)
 
 
     if not ply:IsDetectiveTeam() then
-        local sName = GetGlobalString("ttt_cultist_shrine_name")
         ply:ChatPrint("You have pledged your life to " .. sName .. ". Your soul has been reborn!")
 
         for k, v in pairs(player.GetAll()) do
@@ -178,8 +181,14 @@ function ENT:Use(ply, caller, useType, value)
 end
 
 hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
+    local convertT = true
+    if ConVarExists("ttt_cultist_convert_traitor") then
+        print("convert T")
+        convertT = GetConVar("ttt_cultist_convert_traitor"):GetBool()
+    end
     if IsValid(ent) and not ent:IsPlayer() and ent.TimeToPledge ~= nil
-            and not ply:IsTraitorTeam() and not ply:IsCultist() and (not ply:IsDetectiveTeam() or (ply:IsDetectiveTeam() and not ent:GetDesecrated()))  then
+            and (convertT or not ply:IsTraitorTeam()) and not ply:IsCultist()
+            and (not ply:IsDetectiveTeam() or (ply:IsDetectiveTeam() and not ent:GetDesecrated()))  then
 
         -- If Pledging has been set by Use we know they are still holding down the button
         -- Or if the first time used (Use gets called second) we have to let it pass at least once)
