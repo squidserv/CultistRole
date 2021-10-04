@@ -45,7 +45,15 @@ ROLE.shouldactlikejester = nil
 end
 --]]
 
-ROLE.translations = {}
+ROLE.translations = {
+    ["english"] = {
+        ["shrine_name"] = "Cult Shrine"
+        ["shrine_hint"] = "Hold {usekey} to pledge yourself to the cult"
+        ["shrine_hint_det"] = "This shrine has converted: {num} Innocents. Hold {usekey} to investigate"
+        ["shrine_broken"] = "One of your shrines has been destroyed!"
+        ["shrine_help"] = "{primaryfire} places the Shrine"
+    }
+}
 
 ROLE.convars = {}
 table.insert(ROLE.convars, {
