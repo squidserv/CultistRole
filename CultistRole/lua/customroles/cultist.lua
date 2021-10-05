@@ -21,15 +21,12 @@ ROLE.startingcredits = 1
 ROLE.startinghealth = nil
 ROLE.maxhealth = nil
 
-ROLE.isactive = nil
-ROLE.selectionpredicate = nil
-
 if SERVER then
     CreateConVar("ttt_cultist_pledge_time", 3, FCVAR_NONE, "How long it takes for someone to join the cult", 0, 120)
     CreateConVar("ttt_cultist_shrine_ammo", 3, FCVAR_NONE, "How many people each shrine can convert", 0, 15)
     CreateConVar("ttt_cultist_pledge_health", 105, FCVAR_NONE, "The health of cult pledges", 0, 200)
     CreateConVar("ttt_cultist_convert_traitor", 1, FCVAR_NONE, "Can you convert T's")
-    -- TODO CreateConVar("ttt_cultist_jester_like", 0, FCVAR_NONE, "Can they do damage?")
+    CreateConVar("ttt_cultist_jester_like", 0, FCVAR_NONE, "Can they do damage?")
     CreateConVar("ttt_cultist_shrine_name", "The Almighty One", FCVAR_REPLICATED, "The name of the shrines")
 
     hook.Add("TTTSyncGlobals", "CultistGlobals", function()
@@ -37,12 +34,18 @@ if SERVER then
     end)
 end
 
-ROLE.shouldactlikejester = nil
---[[function()
-    print("Is jester like function ".. GetConVar("ttt_cultist_jester_like"):GetBool())
-    return GetConVar("ttt_cultist_jester_like"):GetBool()
+ROLE.isactive = function(ply)
+    return ply:GetNWBool("ActivatedCultist", false)
 end
---]]
+ROLE.selectionpredicate = nil
+
+ROLE.shouldactlikejester = function(ply)
+    return not ply:IsRoleActive()
+end
+
+ROLE.onroleassigned = function(ply)
+    ply:SetNWBool("ActivatedCultist", not GetConVar("ttt_cultist_jester_like"):GetBool())
+end
 
 ROLE.translations = {
     ["english"] = {
@@ -72,12 +75,10 @@ table.insert(ROLE.convars, {
     cvar = "ttt_cultist_convert_traitor",
     type = ROLE_CONVAR_TYPE_BOOL
 })
---[[
 table.insert(ROLE.convars, {
     cvar = "ttt_cultist_jester_like",
     type = ROLE_CONVAR_TYPE_BOOL
 })
---]]
 table.insert(ROLE.convars, {
     cvar = "ttt_cultist_shrine_name",
     type = ROLE_CONVAR_TYPE_TEXT
