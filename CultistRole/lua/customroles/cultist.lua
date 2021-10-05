@@ -155,9 +155,10 @@ end
 if CLIENT then
     -- Show the cultist role icon to other cultists
     hook.Add("TTTTargetIDPlayerRoleIcon", "Cultist_TTTTargetIDPlayerRoleIcon", function(ply, cli, role, noz, colorRole, hideBeggar, showJester, hideBodysnatcher)
-        if cli:IsCultist() and ply:IsCultist() then
-            return ROLE_CULTIST
-        else
+        if ply:IsCultist() then
+            if cli:IsCultist() then
+                return ROLE_CULTIST
+            end
             return false
         end
     end)
