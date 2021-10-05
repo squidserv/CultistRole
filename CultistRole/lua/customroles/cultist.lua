@@ -162,6 +162,22 @@ if CLIENT then
             return false
         end
     end)
+    hook.Add("TTTTargetIDPlayerRing", "Cultist_TTTTargetIDPlayerRing", function(ply, cli, ringVisible)
+        if IsPlayer(ply) and ply:IsCultist() then
+            if cli:IsCultist() then
+                return true
+            end
+            return false
+        end
+    end)
+    hook.Add("TTTTargetIDPlayerText", "Cultist_TTTTargetIDPlayerText", function(ply, cli, text, clr, second)
+        if IsPlayer(ply) and ply:IsCultist() then
+            if cli:IsCultist() then
+                return ROLE_STRINGS[ROLE_CULTIST]:upper(), ROLE_COLORS[ROLE_CULTIST]
+            end
+            return false
+        end
+    end)
     hook.Add("TTTEventFinishText", "CultistEventFinishText", function(e)
         if e.win == WIN_CULTIST then
             return LANG.GetParamTranslation("ev_win_cultist", { role = ROLE_STRINGS[ROLE_CULTIST]:lower() })
