@@ -153,6 +153,14 @@ if SERVER then
 end
 
 if CLIENT then
+    -- Show the cultist role icon to other cultists
+    hook.Add("TTTTargetIDPlayerRoleIcon", "Cultist_TTTTargetIDPlayerRoleIcon", function(ply, cli, role, noz, colorRole, hideBeggar, showJester, hideBodysnatcher)
+        if cli:IsCultist() and ply:IsCultist() then
+            return ROLE_CULTIST
+        else
+            return false
+        end
+    end)
     hook.Add("TTTEventFinishText", "CultistEventFinishText", function(e)
         if e.win == WIN_CULTIST then
             return LANG.GetParamTranslation("ev_win_cultist", { role = ROLE_STRINGS[ROLE_CULTIST]:lower() })
