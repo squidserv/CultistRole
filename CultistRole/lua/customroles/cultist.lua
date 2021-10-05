@@ -164,7 +164,7 @@ if CLIENT then
     end)
     hook.Add("TTTTargetIDPlayerRing", "Cultist_TTTTargetIDPlayerRing", function(ply, cli, ringVisible)
         if IsPlayer(ply) and ply:IsCultist() then
-            return cli:IsCultist()
+            return cli:IsCultist(), ROLE_COLORS[ROLE_CULTIST]
         end
     end)
     hook.Add("TTTTargetIDPlayerText", "Cultist_TTTTargetIDPlayerText", function(ply, cli, text, clr, second)
