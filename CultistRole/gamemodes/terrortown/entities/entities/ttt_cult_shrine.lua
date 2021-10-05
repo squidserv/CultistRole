@@ -140,6 +140,7 @@ function ENT:Pledge(ply)
         --Set the pledged player to cult
         ply:SetCredits(0)
         ply:SetRole(ROLE_CULTIST)
+        ply:StripRoleWeapons()
         -- Make sure they are activated
         ply:SetNWBool("ActivatedCultist", true)
 
