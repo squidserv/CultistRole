@@ -154,6 +154,18 @@ function ENT:Pledge(ply)
         self:SetNumOfConverts(self:GetNumOfConverts() + 1)
         self:SetConvertedNicks(self:GetConvertedNicks() .. " " .. ply:Nick())
 
+        local sName = "The Almighty One"
+        if CRVersion("1.2.7") then
+            sName = GetGlobalString("ttt_cultist_shrine_name")
+        end
+        ply:PrintMessage(HUD_PRINTCENTER, "You have pledged your life to " .. sName .. ". Your soul has been reborn!")
+
+        for k, v in pairs(player.GetAll()) do
+            if v:IsCultist() then
+                v:PrintMessage(HUD_PRINTCENTER, ply:Nick() .. " has pledged their life to the cult!")
+            end
+        end
+
     else
         self:SetDesecrated(true)
         ply:PrintMessage(HUD_PRINTCENTER, "These terrorists have betrayed you: " .. self:GetConvertedNicks())
@@ -162,21 +174,6 @@ function ENT:Pledge(ply)
 
     self:EmitSound(pledged)
     SendFullStateUpdate()
-
-
-    if not ply:IsDetectiveTeam() then
-        local sName = "The Almighty One"
-        if CRVersion("1.2.7") then
-            sName = GetGlobalString("ttt_cultist_shrine_name")
-        end
-        ply:ChatPrint("You have pledged your life to " .. sName .. ". Your soul has been reborn!")
-
-        for k, v in pairs(player.GetAll()) do
-            if v:IsCultist() then
-                v:PrintMessage(HUD_PRINTCENTER, ply:Nick() .. " has pledged their life to the cult!")
-            end
-        end
-    end
 end
 
 function ENT:Use(ply, caller, useType, value)
@@ -189,8 +186,12 @@ hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
     if ConVarExists("ttt_cultist_convert_traitor") then
         convertT = GetConVar("ttt_cultist_convert_traitor"):GetBool()
     end
+    local converJ = false
+    if ConVarExists("ttt_cultist_convert_jester") then
+        convertT = GetConVar("ttt_cultist_convert_jester"):GetBool()
+    end
     if IsValid(ent) and not ent:IsPlayer() and ent.TimeToPledge ~= nil
-            and (convertT or not ply:IsTraitorTeam()) and not ply:IsCultist()
+            and (convertT or not ply:IsTraitorTeam()) and (converJ or not ply:IsJesterTeam()) and not ply:IsCultist()
             and (not ply:IsDetectiveTeam() or (ply:IsDetectiveTeam() and not ent:GetDesecrated()))  then
 
         -- If Pledging has been set by Use we know they are still holding down the button

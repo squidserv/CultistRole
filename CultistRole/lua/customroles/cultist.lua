@@ -27,6 +27,7 @@ if SERVER then
     CreateConVar("ttt_cultist_pledge_health", 105, FCVAR_NONE, "The health of cult pledges", 0, 200)
     CreateConVar("ttt_cultist_convert_traitor", 1, FCVAR_NONE, "Can you convert T's")
     CreateConVar("ttt_cultist_jester_like", 0, FCVAR_NONE, "Can they do damage?")
+    CreateConVar("ttt_cultist_convert_jester", 0, FCVAR_NONE, "Can jesters join?")
     CreateConVar("ttt_cultist_shrine_name", "The Almighty One", FCVAR_REPLICATED, "The name of the shrines")
 
     hook.Add("TTTSyncGlobals", "CultistGlobals", function()
@@ -77,6 +78,10 @@ table.insert(ROLE.convars, {
 })
 table.insert(ROLE.convars, {
     cvar = "ttt_cultist_jester_like",
+    type = ROLE_CONVAR_TYPE_BOOL
+})
+table.insert(ROLE.convars, {
+    cvar = "ttt_cultist_convert_jester",
     type = ROLE_CONVAR_TYPE_BOOL
 })
 table.insert(ROLE.convars, {
