@@ -186,12 +186,12 @@ hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
     if ConVarExists("ttt_cultist_convert_traitor") then
         convertT = GetConVar("ttt_cultist_convert_traitor"):GetBool()
     end
-    local converJ = false
+    local convertJ = false
     if ConVarExists("ttt_cultist_convert_jester") then
-        convertT = GetConVar("ttt_cultist_convert_jester"):GetBool()
+        convertJ = GetConVar("ttt_cultist_convert_jester"):GetBool()
     end
     if IsValid(ent) and not ent:IsPlayer() and ent.TimeToPledge ~= nil
-            and (convertT or not ply:IsTraitorTeam()) and (converJ or not ply:IsJesterTeam()) and not ply:IsCultist()
+            and (convertT or not ply:IsTraitorTeam()) and (convertJ or not ply:IsJesterTeam()) and not ply:IsCultist()
             and (not ply:IsDetectiveTeam() or (ply:IsDetectiveTeam() and not ent:GetDesecrated()))  then
 
         -- If Pledging has been set by Use we know they are still holding down the button
