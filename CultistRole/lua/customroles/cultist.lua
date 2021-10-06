@@ -198,6 +198,12 @@ if CLIENT then
         end
     end)
 
+    hook.Add("TTTScoreboardPlayerRole", "CultistScoreboard", function(ply, cli, color, role)
+        if ply:IsCultist() and cli:IsCultist() then
+            return ROLE_COLORS[ROLE_CULTIST], ROLE_STRINGS_SHORT[ROLE_CULTIST]
+        end
+    end)
+
     hook.Add("TTTTutorialRoleText", "CultistTutorialRoleText", function(role, titleLabel, roleIcon)
         if role == ROLE_CULTIST then
             local roleColor = ROLE_COLORS[ROLE_CULTIST]
