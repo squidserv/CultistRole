@@ -206,7 +206,7 @@ if CLIENT then
 
     hook.Add("TTTTutorialRoleText", "CultistTutorialRoleText", function(role, titleLabel, roleIcon)
         if role == ROLE_CULTIST then
-            local roleColor = ROLE_COLORS[ROLE_CULTIST]
+            local roleColor = GetRoleTeamColor(ROLE_TEAM_INDEPENDENT)
             local html = "The " .. ROLE_STRINGS[ROLE_CULTIST] .. " is an <span style='color: rgb(" .. roleColor.r .. ", " .. roleColor.g .. ", " .. roleColor.b .. ")'>independent role</span> who must convince fellow players to join their team."
             html = html .. "<ul style='position: relative; top: -15px;'>"
             local roleColorInno = ROLE_COLORS[ROLE_INNOCENT]
