@@ -26,6 +26,7 @@ if SERVER then
     CreateConVar("ttt_cultist_shrine_ammo", 3, FCVAR_NONE, "How many people each shrine can convert", 0, 15)
     CreateConVar("ttt_cultist_pledge_health", 105, FCVAR_NONE, "The health of cult pledges", 0, 200)
     CreateConVar("ttt_cultist_convert_traitor", 1, FCVAR_NONE, "Can you convert T's")
+    CreateConVar("ttt_cultist_pledge_credits", 0, FCVAR_NONE, "The amount of credits pledges start with")
     CreateConVar("ttt_cultist_jester_like", 0, FCVAR_NONE, "Can they do damage?")
     CreateConVar("ttt_cultist_convert_jester", 0, FCVAR_NONE, "Can jesters join?")
     CreateConVar("ttt_cultist_damage_bonus", 0, FCVAR_NONE, "Damage bonus for the pledges")

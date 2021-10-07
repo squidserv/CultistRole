@@ -24,6 +24,7 @@ ttt_cultist_starting_credits    1                   // The player's starting cre
 ttt_cultist_pledge_time         3                   // How long it takes for someone to join the cult
 ttt_cultist_shrine_ammo         3                   // How many people each shrine can convert
 ttt_cultist_pledge_health       105                 // How much health the cult pledges get
+ttt_cultist_pledge_credits      0                   // Then number of credits pledges start with
 ttt_cultist_convert_traitor     1                   // Whether Traitors can join the cult or not
 ttt_cultist_convert_jester      0                   // Whether Jesters can join the cult or not
 ttt_cultist_damage_bonus        0                   // Damage bonus that the pledges have when they are converted (e.g. 0.5 = 50% more damage)

@@ -138,7 +138,11 @@ function ENT:Pledge(ply)
         net.Broadcast()
 
         --Set the pledged player to cult
-        ply:SetCredits(0)
+        local creds = 0
+        if ConVarExists("ttt_cultist_pledge_credits") then
+            creds = GetConVar("ttt_cultist_pledge_credits"):GetInt()
+        end
+        ply:SetCredits(creds)
         ply:SetRole(ROLE_CULTIST)
         ply:StripRoleWeapons()
         -- Make sure they are activated
