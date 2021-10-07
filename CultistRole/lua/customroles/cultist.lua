@@ -28,6 +28,8 @@ if SERVER then
     CreateConVar("ttt_cultist_convert_traitor", 1, FCVAR_NONE, "Can you convert T's")
     CreateConVar("ttt_cultist_jester_like", 0, FCVAR_NONE, "Can they do damage?")
     CreateConVar("ttt_cultist_convert_jester", 0, FCVAR_NONE, "Can jesters join?")
+    CreateConVar("ttt_cultist_damage_bonus", 0, FCVAR_NONE, "Damage bonus for the pledges")
+    CreateConVar("ttt_cultist_damage_reduction", 0, FCVAR_NONE, "Damage reduction against the pledges")
     CreateConVar("ttt_cultist_shrine_name", "The Almighty One", FCVAR_REPLICATED, "The name of the shrines")
 
     hook.Add("TTTSyncGlobals", "CultistGlobals", function()
@@ -153,6 +155,21 @@ if SERVER then
             LANG.Msg("win_cultist", { role = ROLE_STRINGS[ROLE_CULTIST] })
             ServerLog("Result: " .. ROLE_STRINGS[ROLE_CULTIST] .. " wins.\n")
             return true
+        end
+    end)
+
+    hook.Add("ScalePlayerDamage", "CultistDamage", function(ply, hitgroup, dmginfo)
+        local att = dmginfo:GetAttacker()
+        if IsPlayer(att) and GetRoundState() >= ROUND_ACTIVE and dmginfo:IsBulletDamage()then
+            if att:IsActiveCultist() and att:IsRoleActive() then
+                local bonus = GetConVar("ttt_cultist_damage_bonus"):GetFloat()
+                dmginfo:ScaleDamage(1 + bonus)
+            end
+
+            if ply:IsActiveCultist() and ply:IsRoleActive() then
+                local reduction = GetConVar("ttt_cultist_damage_reduction"):GetFloat()
+                dmginfo:ScaleDamage(1 - reduction)
+            end
         end
     end)
 end
