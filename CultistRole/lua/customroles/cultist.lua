@@ -205,8 +205,8 @@ if CLIENT then
     end)
 
     hook.Add("TTTScoringSummaryRender", "Cultist_TTTScoringSummaryRender", function(ply, roleFileName, groupingRole, roleColor, nameLabel, startingRole, finalRole)
-        if ply:IsCultist() then
-            return roleFileName, startingRole
+        if finalRole == ROLE_CULTIST then
+            return ROLE_STRINGS_SHORT[startingRole], startingRole
         end
     end)
 
