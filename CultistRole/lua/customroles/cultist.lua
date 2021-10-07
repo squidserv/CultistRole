@@ -87,6 +87,14 @@ table.insert(ROLE.convars, {
     type = ROLE_CONVAR_TYPE_BOOL
 })
 table.insert(ROLE.convars, {
+    cvar = "ttt_cultist_damage_bonus",
+    type = ROLE_CONVAR_TYPE_BOOL
+})
+table.insert(ROLE.convars, {
+    cvar = "ttt_cultist_damage_reduction",
+    type = ROLE_CONVAR_TYPE_BOOL
+})
+table.insert(ROLE.convars, {
     cvar = "ttt_cultist_shrine_name",
     type = ROLE_CONVAR_TYPE_TEXT
 })
