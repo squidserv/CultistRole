@@ -72,7 +72,7 @@ function ENT:Initialize()
     local b = 32
     self:SetCollisionBounds(Vector(-b, -b, -b), Vector(b,b,b))
 
-    self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+    self:SetCollisionGroup(COLLISION_GROUP_NONE)
     if SERVER then
         self:SetMaxHealth(400)
 
