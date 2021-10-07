@@ -204,6 +204,12 @@ if CLIENT then
         end
     end)
 
+    hook.Add("TTTScoringSummaryRender", "Cultist_TTTScoringSummaryRender", function(ply, roleFileName, groupingRole, roleColor, nameLabel, startingRole, finalRole)
+        if finalRole == ROLE_CULTIST then
+            return ROLE_STRINGS_SHORT[startingRole], startingRole
+        end
+    end)
+
     hook.Add("TTTTutorialRoleText", "CultistTutorialRoleText", function(role, titleLabel, roleIcon)
         if role == ROLE_CULTIST then
             local roleColor = GetRoleTeamColor(ROLE_TEAM_INDEPENDENT)
