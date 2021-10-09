@@ -120,9 +120,15 @@ if SERVER then
     hook.Add("TTTBeginRound", "CultistAlertMessage", function()
         local livingCultist = player.IsRoleLiving(ROLE_CULTIST)
         if livingCultist then
-            for i, p in ipairs(player.GetAll()) do
-                if p:IsTraitorTeam() then
+            if CRVersion("1.3.1") then
+                player.ExecuteAgainstTeamPlayers(ROLE_TEAM_TRAITOR, false, false, function(p)
                     p:PrintMessage(HUD_PRINTCENTER, "There is ".. ROLE_STRINGS_EXT[ROLE_CULTIST])
+                end)
+            else
+                for i, p in ipairs(player.GetAll()) do
+                    if p:IsTraitorTeam() then
+                        p:PrintMessage(HUD_PRINTCENTER, "There is ".. ROLE_STRINGS_EXT[ROLE_CULTIST])
+                    end
                 end
             end
         end
