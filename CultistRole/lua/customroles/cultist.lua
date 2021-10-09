@@ -125,7 +125,7 @@ if SERVER then
                     p:PrintMessage(HUD_PRINTCENTER, "There is ".. ROLE_STRINGS_EXT[ROLE_CULTIST])
                 end)
             else
-                for i, p in ipairs(player.GetAll()) do
+                for _, p in ipairs(player.GetAll()) do
                     if p:IsTraitorTeam() then
                         p:PrintMessage(HUD_PRINTCENTER, "There is ".. ROLE_STRINGS_EXT[ROLE_CULTIST])
                     end
