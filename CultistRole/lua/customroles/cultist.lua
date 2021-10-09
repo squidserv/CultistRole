@@ -118,7 +118,8 @@ if SERVER then
 
     -- Print a message to tell the T's that there is a cultist
     hook.Add("TTTBeginRound", "CultistAlertMessage", function()
-        if player.IsRoleLiving(ROLE_CULTIST) then
+        local livingCultist = player.IsRoleLiving(ROLE_CULTIST)
+        if livingCultist then
             for i, p in ipairs(player.GetAll()) do
                 if p:IsTraitorTeam() then
                     p:PrintMessage(HUD_PRINTCENTER, "There is ".. ROLE_STRINGS_EXT[ROLE_CULTIST])
@@ -126,7 +127,7 @@ if SERVER then
             end
         end
 
-        if CRVersion("1.3.1") and player.LivingCount() <= 2 then
+        if CRVersion("1.3.1") and player.LivingCount() <= 2 and livingCultist then
             player.GetLivingRole(ROLE_CULTIST):SetNWBool("ActivatedCultist", true)
         end
     end)
