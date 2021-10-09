@@ -29,7 +29,7 @@ ttt_cultist_convert_traitor     1                   // Whether Traitors can join
 ttt_cultist_convert_jester      0                   // Whether Jesters can join the cult or not
 ttt_cultist_damage_bonus        0                   // Damage bonus that the pledges have when they are converted (e.g. 0.5 = 50% more damage)
 ttt_cultist_damage_reduction    0                   // Damage reduction that the pledges take when they are converted (e.g. 0.5 = 50% less damage)
-ttt_cultist_jester_like         0                   // Can the leader do damage or just the minions?
+ttt_cultist_jester_like         0                   // Can the leader do damage or just the minions? This does not apply if there are only 2 players left as of CR 1.3.1
 ttt_cultist_shrine_name         "The Almighty One"  // The default name of the cult
 
 ```

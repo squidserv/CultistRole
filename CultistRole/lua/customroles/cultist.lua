@@ -118,20 +118,16 @@ if SERVER then
 
     -- Print a message to tell the T's that there is a cultist
     hook.Add("TTTBeginRound", "CultistAlertMessage", function()
-        local isCultist
-        for i, ply in ipairs(player.GetAll()) do
-            if ply:IsCultist() then
-                isCultist = true
-                break
-            end
-        end
-
-        if isCultist then
+        if player.IsRoleLiving(ROLE_CULTIST) then
             for i, p in ipairs(player.GetAll()) do
                 if p:IsTraitorTeam() then
                     p:PrintMessage(HUD_PRINTCENTER, "There is ".. ROLE_STRINGS_EXT[ROLE_CULTIST])
                 end
             end
+        end
+
+        if CRVersion("1.3.1") and player.LivingCount() <= 2 then
+            player.GetLivingRole(ROLE_CULTIST):SetNWBool("ActivatedCultist", true)
         end
     end)
 
@@ -178,6 +174,15 @@ if SERVER then
             if ply:IsActiveCultist() and ply:IsRoleActive() then
                 local reduction = GetConVar("ttt_cultist_damage_reduction"):GetFloat()
                 dmginfo:ScaleDamage(1 - reduction)
+            end
+        end
+    end)
+
+    hook.Add("PlayerDeath", "ActivateLoneCultistPlayerDeath", function(victim, inflictor, attacker)
+        if CRVersion("1.3.1") and player.LivingCount() <= 2 and player.IsRoleLiving(ROLE_CULTIST) then
+            local ply = player.GetLivingRole(ROLE_CULTIST)
+            if not ply:IsRoleActive() then
+                ply:SetNWBool("ActivatedCultist", true)
             end
         end
     end)
