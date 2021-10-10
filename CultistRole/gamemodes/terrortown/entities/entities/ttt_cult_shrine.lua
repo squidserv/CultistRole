@@ -183,6 +183,7 @@ end
 
 function ENT:Use(ply, caller, useType, value)
     -- Continue to let the client know the player is pledging
+    print("use")
     ply:SetNWInt("Pledging", STATE_PLEDGE)
     net.Start("TTT_PledgingPlayer")
     net.WriteEntity(ply)
@@ -242,14 +243,17 @@ if CLIENT then
     local ply
 
     net.Receive("TTT_PledgingPlayer", function()
+        print("receive")
         ply = net.ReadEntity()
     end)
 
     hook.Add("HUDPaint", "Cultist_ProgressBar", function()
         if not IsPlayer(ply) then return end
         if not ply:IsActive() then return end
-        if ply:SteamID64() ~= LocalPlayer():SteamID64() then return end
+        if ply:SteamID64() ~= LocalPlayer():SteamID64() then print("not ply") return end
         if ply:GetNWInt("Pledging") == STATE_PLEDGE then
+
+            print("hudpaint")
 
             local sName = "The Almighty One"
             if CRVersion("1.2.7") then
