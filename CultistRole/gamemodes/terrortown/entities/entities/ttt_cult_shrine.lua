@@ -21,6 +21,7 @@ if CLIENT then
 
 else
     util.AddNetworkString("TTT_CultPledged")
+    util.AddNetworkString("TTT_PledgingPlayer")
 end
 
 ENT.Type = "anim"
@@ -183,6 +184,9 @@ end
 function ENT:Use(ply, caller, useType, value)
     -- Continue to let the client know the player is pledging
     ply:SetNWInt("Pledging", STATE_PLEDGE)
+    net.Start("TTT_PledgingPlayer")
+    net.WriteEntity(ply)
+    net.Send(ply)
 end
 
 hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
@@ -229,6 +233,54 @@ hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
         end
     end
 end )
+
+if CLIENT then
+    local ply
+
+    net.Receive("TTT_PledgingPlayer", function()
+        ply = net.ReadEntity()
+    end)
+
+    hook.Add("HUDPaint", "Cultist_ProgressBar", function()
+        if IsValid(ply) and ply:IsPlayer() and ply:IsActive() and ply:SteamID64() == LocalPlayer():SteamID64()
+                and ply:GetNWInt("Pledging") == STATE_PLEDGE then
+
+            if(ply:GetNWInt("PledgeState") == STATE_NONE) then return end
+
+            local sName = "The Almighty One"
+            if CRVersion("1.2.7") then
+                sName = GetGlobalString("ttt_cultist_shrine_name")
+            end
+
+            local TimeToPledge = ply:GetNWInt("TimeToPledge")
+            local PledgeTime = ply:GetNWFloat("PledgeTime")
+
+            local x = ScrW() / 2.0
+            local y = ScrW() / 2.0
+
+            y = y + (y / 3)
+
+            local w, h = 255, 20
+
+            local timer = PledgeTime + TimeToPledge
+
+            if timer < 0 then return end
+
+            local cc = math.min(1, 1 - ((timer - CurTime()) / TimeToPledge))
+
+            surface.SetDrawColor(0, 255, 0, 155)
+
+            surface.DrawOutlinedRect(x - w / 2, y - h, w, h)
+
+            surface.DrawRect(x - w / 2, y - h, w * cc, h)
+
+            surface.SetFont("TabLarge")
+            surface.SetTextColor(255, 255, 255, 180)
+            surface.SetTextPos((x - w / 2) + 3, y - h - 15)
+            surface.DrawText("Pledging your life to " .. sName)
+        end
+    end)
+end
 
 if SERVER then
     -- recharge
