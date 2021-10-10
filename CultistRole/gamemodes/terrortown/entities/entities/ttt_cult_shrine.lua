@@ -246,8 +246,7 @@ if CLIENT then
     end)
 
     hook.Add("HUDPaint", "Cultist_ProgressBar", function()
-        if not IsValid(ply) then return end
-        if not ply:IsPlayer() then return end
+        if not IsPlayer(ply) then return end
         if not ply:IsActive() then return end
         if ply:SteamID64() ~= LocalPlayer():SteamID64() then return end
         if ply:GetNWInt("Pledging") == STATE_PLEDGE then
