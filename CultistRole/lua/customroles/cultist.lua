@@ -35,6 +35,8 @@ if SERVER then
 
     hook.Add("TTTSyncGlobals", "CultistGlobals", function()
         SetGlobalString("ttt_cultist_shrine_name", GetConVar("ttt_cultist_shrine_name"):GetString())
+        SetGlobalBool("ttt_cultist_convert_traitor", GetConVar("ttt_cultist_convert_traitor"):GetBool())
+        SetGlobalBool("ttt_cultist_convert_jester", GetConVar("ttt_cultist_convert_traitor"):GetBool())
     end)
 end
 
