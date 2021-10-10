@@ -214,6 +214,7 @@ hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
                 ply:SetNWInt("PledgeState", STATE_PLEDGE)
                 ply:SetNWFloat("PledgeTime", CurTime())
                 ply:SetNWInt("TimeToPledge", ent.TimeToPledge)
+                ply:SetNWEntity("Shrine", ent)
                 ent:EmitSound(shrinesound)
                 if ent:GetDesecrated() then
                     ply:PrintMessage(HUD_PRINTCENTER, "You notice this shrine has been desecrated...")
@@ -248,42 +249,61 @@ if CLIENT then
     hook.Add("HUDPaint", "Cultist_ProgressBar", function()
         if not IsPlayer(ply) then return end
         if not ply:IsActive() then return end
-        if ply:SteamID64() ~= LocalPlayer():SteamID64() then print("not ply") return end
-        if ply:GetNWInt("Pledging") == STATE_PLEDGE then
+        if ply:SteamID64() ~= LocalPlayer():SteamID64() then return end
+        if ply:GetNWInt("Pledging") == STATE_NONE then return end
 
-            local sName = "The Almighty One"
-            if CRVersion("1.2.7") then
-                sName = GetGlobalString("ttt_cultist_shrine_name")
-            end
+        local shrine = ply:GetNWEntity("Shrine")
+        if not IsValid(shrine) then return end
 
-            local TimeToPledge = ply:GetNWInt("TimeToPledge")
-            local PledgeTime = ply:GetNWFloat("PledgeTime")
+        local convertT = true
+        if CRVersion("1.2.7") then
+            convertT = GetGlobalBool("ttt_cultist_convert_traitor")
+        end
+        if not convertT and ply:IsTraitorTeam() then return end
 
-            local x = ScrW() / 2.0
-            local y = ScrW() / 2.0
+        local convertJ = false
+        if CRVersion("1.2.7") then
+            convertJ = GetGlobalBool("ttt_cultist_convert_jester")
+        end
+        if not convertJ and ply:IsJesterTeam() and not ply:IsRoleActive() then return end
 
-            y = y + (y / 3)
+        if ply:IsCultist() then return end
+        if ply:IsDetectiveTeam() and shrine:GetDesecrated() then return end
 
-            local w, h = 255, 20
+        local sName = "The Almighty One"
+        if CRVersion("1.2.7") then
+            sName = GetGlobalString("ttt_cultist_shrine_name")
+        end
 
-            local timer = PledgeTime + TimeToPledge
+        local TimeToPledge = ply:GetNWInt("TimeToPledge")
+        local PledgeTime = ply:GetNWFloat("PledgeTime")
 
-            print(timer)
+        local x = ScrW() / 2.0
+        local y = ScrH() / 2.0
 
-            if timer < 0 then return end
+        y = y + (y / 3)
 
-            local cc = math.min(1, 1 - ((timer - CurTime()) / TimeToPledge))
+        local w, h = 255, 20
 
-            surface.SetDrawColor(0, 255, 0, 155)
+        local timer = PledgeTime + TimeToPledge
 
-            surface.DrawOutlinedRect(x - w / 2, y - h, w, h)
+        if timer < 0 then return end
 
-            surface.DrawRect(x - w / 2, y - h, w * cc, h)
+        local cc = math.min(1, 1 - ((timer - CurTime()) / TimeToPledge))
 
-            surface.SetFont("TabLarge")
-            surface.SetTextColor(255, 255, 255, 180)
-            surface.SetTextPos((x - w / 2) + 3, y - h - 15)
+        surface.SetDrawColor(0, 255, 0, 155)
+
+        surface.DrawOutlinedRect(x - w / 2, y - h, w, h)
+
+        surface.DrawRect(x - w / 2, y - h, w * cc, h)
+
+        surface.SetFont("TabLarge")
+        surface.SetTextColor(255, 255, 255, 180)
+        surface.SetTextPos((x - w / 2) + 3, y - h - 15)
+        if not ply:IsDetectiveTeam() then
             surface.DrawText("Pledging your life to " .. sName)
+        else
+            surface.DrawText("Checking for betrayals")
         end
     end)
 end
