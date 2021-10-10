@@ -198,6 +198,7 @@ hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
     if ConVarExists("ttt_cultist_convert_jester") then
         convertJ = GetConVar("ttt_cultist_convert_jester"):GetBool()
     end
+
     if not IsValid(ent) then return end
     if ent:IsPlayer() then return end
     if not ent.TimeToPledge then return end
