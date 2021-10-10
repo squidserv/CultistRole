@@ -198,9 +198,12 @@ hook.Add( "PlayerUse", "hk_shrine_used_by_player", function( ply, ent )
     if ConVarExists("ttt_cultist_convert_jester") then
         convertJ = GetConVar("ttt_cultist_convert_jester"):GetBool()
     end
-    if IsValid(ent) and not ent:IsPlayer() and ent.TimeToPledge ~= nil and (convertT or not ply:IsTraitorTeam())
-            and (convertJ or (not ply:IsJesterTeam() or ply:IsRoleActive())) and not ply:IsCultist()
-            and (not ply:IsDetectiveTeam() or (ply:IsDetectiveTeam() and not ent:GetDesecrated()))  then
+    if not IsValid(ent) then return end
+    if ent:IsPlayer() then return end
+    if not ent.TimeToPledge then return end
+
+    if (convertT or not ply:IsTraitorTeam()) and (convertJ or (not ply:IsJesterTeam() or ply:IsRoleActive()))
+            and not ply:IsCultist() and (not ply:IsDetectiveTeam() or (ply:IsDetectiveTeam() and not ent:GetDesecrated()))  then
 
         -- If Pledging has been set by Use we know they are still holding down the button
         -- Or if the first time used (Use gets called second) we have to let it pass at least once)
