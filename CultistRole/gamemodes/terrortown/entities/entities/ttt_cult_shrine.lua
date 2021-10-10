@@ -242,10 +242,11 @@ if CLIENT then
     end)
 
     hook.Add("HUDPaint", "Cultist_ProgressBar", function()
-        if IsValid(ply) and ply:IsPlayer() and ply:IsActive() and ply:SteamID64() == LocalPlayer():SteamID64()
-                and ply:GetNWInt("Pledging") == STATE_PLEDGE then
-
-            if(ply:GetNWInt("PledgeState") == STATE_NONE) then return end
+        if not IsValid(ply) then return end
+        if not ply:IsPlayer() then return end
+        if not ply:IsActive() then return end
+        if ply:SteamID64() ~= LocalPlayer():SteamID64() then return end
+        if ply:GetNWInt("Pledging") == STATE_PLEDGE then
 
             local sName = "The Almighty One"
             if CRVersion("1.2.7") then
