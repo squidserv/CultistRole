@@ -70,8 +70,8 @@ function ENT:Initialize()
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_BBOX)
 
-    local b = 32
-    self:SetCollisionBounds(Vector(-b, -b, -b), Vector(b,b,b))
+
+    self:SetCollisionBounds(Vector(-14, -14, -25.5), Vector(14,14,25.5))
 
     self:SetCollisionGroup(COLLISION_GROUP_NONE)
     if SERVER then
