@@ -105,9 +105,11 @@ table.insert(ROLE.convars, {
 RegisterRole(ROLE)
 
 hook.Add("Initialize", "CultistInitialize", function()
-    -- Use 323 if we're on Custom Roles for TTT earlier than version 1.2.5
-    -- 323 is summation of the ASCII values for the characters "C", "L", and "T"
-    WIN_CULTIST = GenerateNewWinID and GenerateNewWinID() or 323
+    if SERVER then
+        -- Use 323 if we're on Custom Roles for TTT earlier than version 1.2.5
+        -- 323 is summation of the ASCII values for the characters "C", "L", and "T"
+        WIN_CULTIST = GenerateNewWinID and GenerateNewWinID(ROLE_CULTIST) or 323
+    end
 
     if CLIENT then
         LANG.AddToLanguage("english", "win_cultist", "The {role} and their minions have overwhelmed their enemies!")
@@ -264,5 +266,9 @@ if CLIENT then
             html = html .. "<li><span style='color: rgb(" .. roleColorD.r .. ", " .. roleColorD.g .. ", " .. roleColorD.b .. ")'>Detectives</span> can see how many players have used a shrine at a glance. If a <span style='color: rgb(" .. roleColorD.r .. ", " .. roleColorD.g .. ", " .. roleColorD.b .. ")'>Detective</span> uses the shrine, they will begin investigating and eventually be given the names of those who pledged at that specific shrine. Afterwards, the shrine becomes desecrated and can still be used but future pledgers will be notified a <span style='color: rgb(" .. roleColorD.r .. ", " .. roleColorD.g .. ", " .. roleColorD.b .. ")'>detective</span> investigated it."
             return html .. "</ul>"
         end
+    end)
+
+    hook.Add("TTTSyncWinIDs", "CultistTTTWinIDsSynced", function()
+        WIN_CULTIST = WINS_BY_ROLE[ROLE_CULTIST]
     end)
 end
